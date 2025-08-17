@@ -4,10 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { DefaultCard } from "@/components/default-card";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { activate, signOut } from "@/services/auth-service";
 
-export default function Activate() {
+function ActivateContent() {
     const { push } = useRouter();
     const searchParams = useSearchParams();
 
@@ -89,5 +89,12 @@ export default function Activate() {
             </Link>
         </div>
     )
+}
 
+export default function Activate() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+            <ActivateContent />
+        </Suspense>
+    );
 }
